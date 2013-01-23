@@ -33,6 +33,7 @@ public class CellularAutomataEngine {
 
     private static int genomeSize;
 
+    private static int[] dim;
     private static int[] initialState;
 
     private static int[] indexHelper;
@@ -73,7 +74,11 @@ public class CellularAutomataEngine {
     public static int getNbStates() {return nbStates;}
     public static int getNeighborhoodSize() {return neighborhoodSize;}
     public static boolean isWrapAround() {return wrapAround;}
-
+    public static int[] getDim() {return dim;}
+    
+    public static void setDim(int[] dim) {
+        CellularAutomataEngine.dim = dim;
+    }
     public static void setInitialState(int[] intialState) {
         CellularAutomataEngine.initialState = intialState;
     }
@@ -88,6 +93,39 @@ public class CellularAutomataEngine {
     public static void setWrapAround(boolean wrapAround) {
         CellularAutomataEngine.wrapAround = wrapAround;
     }
+    public static boolean verifyDim() {
+        if(dim.length == 1 && neighborhoodSize != 3) {
+            System.out.println("expecting neighborhood size 3 for 1 dimentional CA");
+            return false;
+        }
+        if(dim.length == 2 && (neighborhoodSize != 5 || neighborhoodSize != 9)) {
+            System.out.println("expecting neighborhood size 5 or 9 for 2 dimentional CA");
+            return false;
+        }
+        if(dim.length == 3 && (neighborhoodSize != 7 || neighborhoodSize != 27)) {
+            System.out.println("expecting neighborhood size 7 or 27 for 3 dimentional CA");
+            return false;
+        }
+        
+        int size = 1;
+        for(int i = 0; i < dim.length;i++) size *= dim[i];
+        if(size != initialState.length) {
+            System.out.println("the length of the intialState array and the dimentions do not match");
+            return false;
+        }
+        
+        return true;
+    }
+    
+    /**
+     * This creates a clone of the current state of the CA.
+     * @return 
+     */
+    public int[] getState() {
+        int[] rtrnState = new int[state.length];
+        System.arraycopy(state, 0, rtrnState, 0, state.length);
+        return state;
+    }
 
     private int getGeneIndex(int[] neighborhoodConfiguration) {
         int index = 0;
@@ -95,7 +133,6 @@ public class CellularAutomataEngine {
         {
             if(neighborhoodConfiguration[i] != 0)index += neighborhoodConfiguration[i] * indexHelper[i];
         }
-
         return index;
     }
 
@@ -109,10 +146,25 @@ public class CellularAutomataEngine {
         return genome[index];
     }
 
-    public int getGeneKeepStatistics(int[] neighborhoodConfiguration) {
+    private int getGeneKeepStatistics(int[] neighborhoodConfiguration) {
         int index = getGeneIndex(neighborhoodConfiguration);
         genomeUsageStatistics[index]++;
         return genome[index];
+    }
+    
+    public void step() {
+        int[] nextState = new int[state.length];
+        int[] neighborhood = new int[neighborhoodSize];
+        
+        for(int i = 0; i < state.length;i++) {
+            
+            int center = i;
+            int left = i-1;
+            int right = i+1;
+            
+            int above = 
+            if(neighborhoodSize)
+        }
     }
 
 }
