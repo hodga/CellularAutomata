@@ -46,7 +46,6 @@ public class CellularAutomataEngine {
     private int[] state;
 
     public CellularAutomataEngine() {
-        updateGenomeInformation();
         genome = new int[genomeSize];
         genomeUsageStatistics = new int[genomeSize];
         state = new int[initialState.length];
@@ -54,7 +53,6 @@ public class CellularAutomataEngine {
     }
 
     public CellularAutomataEngine(int[] genome) {
-        updateGenomeInformation();
         if(genome.length != genomeSize) throw new RuntimeException("Genome length: "+genome.length+" Expected: "+genomeSize);
         this.genome = genome;
         genomeUsageStatistics = new int[genomeSize];
@@ -68,7 +66,7 @@ public class CellularAutomataEngine {
         for(int i = 0; i < neighborhoodSize;i++) indexHelper[i] = (int)Math.pow(nbStates, i);
     }
 
-    public int getGenomeSize() {return genomeSize;}
+    public static int getGenomeSize() {return genomeSize;}
     public static int[] getInitialState() {return initialState;}
     public static int getNbStates() {return nbStates;}
     public static int getNeighborhoodSize() {return neighborhoodSize;}
@@ -83,9 +81,11 @@ public class CellularAutomataEngine {
     }
     public static void setNbStates(int nbStates) {
         CellularAutomataEngine.nbStates = nbStates;
+        updateGenomeInformation();
     }
     public static void setNeighborhoodSize(int neighborhoodSize) {
         CellularAutomataEngine.neighborhoodSize = neighborhoodSize;
+        updateGenomeInformation();
     }
     public static void setWrapAround(boolean wrapAround) {
         CellularAutomataEngine.wrapAround = wrapAround;
@@ -113,14 +113,12 @@ public class CellularAutomataEngine {
         return true;
     }
     
-    /**
-     * This creates a clone of the current state of the CA.
-     * @return 
-     */
     public int[] getState() {
-        int[] rtrnState = new int[state.length];
-        System.arraycopy(state, 0, rtrnState, 0, state.length);
         return state;
+    }
+
+    public int[] getGenomeUsageStatistics() {
+        return genomeUsageStatistics;
     }
 
     private int getGeneIndex(int[] neighborhoodConfiguration) {
