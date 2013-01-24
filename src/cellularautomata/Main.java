@@ -5,7 +5,7 @@
 
 package cellularautomata;
 
-import tests.CellularAutomataTest;
+import tests.GeneticAlgorithmTest;
 
 /**
  *
@@ -16,8 +16,9 @@ public class Main {
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) {
-        CellularAutomataTest.test();        
+    public static void main(String[] args) throws Exception{
+        //CellularAutomataTest.test();        
+        GeneticAlgorithmTest.test();
     }
 
 }

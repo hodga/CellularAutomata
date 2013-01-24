@@ -55,6 +55,8 @@ public class CellularAutomataEngine {
     public CellularAutomataEngine(int[] genome) {
         if(genome.length != genomeSize) throw new RuntimeException("Genome length: "+genome.length+" Expected: "+genomeSize);
         this.genome = genome;
+        genome[0] = 0; //the all 0 neighborhood should always result in 0
+        
         genomeUsageStatistics = new int[genomeSize];
         state = new int[initialState.length];
         System.arraycopy(initialState, 0, state, 0, initialState.length);
@@ -120,6 +122,10 @@ public class CellularAutomataEngine {
     public int[] getGenomeUsageStatistics() {
         return genomeUsageStatistics;
     }
+    
+    public int[] getGenome() {
+        return genome;
+    }
 
     private int getGeneIndex(int[] neighborhoodConfiguration) {
         int index = 0;
@@ -132,7 +138,7 @@ public class CellularAutomataEngine {
 
     public void putGene(int[] neighborhoodConfiguration, int gene) {
         int index = getGeneIndex(neighborhoodConfiguration);
-        genome[index] = gene;
+        if(index != 0) genome[index] = gene;
     }
 
     public int getGene(int[] neighborhoodConfiguration) {
