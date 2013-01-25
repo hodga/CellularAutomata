@@ -337,6 +337,9 @@ public class GeneticAlgorithm {
                 sortPopulationByFitness(true);
             }//useLambdaInFitness
             
+            if(best.getFitness() > population[0].getFitness())
+                System.out.println("generation: "+ generation + " complexity: "+population[0].getFitness());
+            
             best = population[0];
             
             //keep statistics, using the original object, so it is important to remember that new GenomeData objects need to be created for new genotypes

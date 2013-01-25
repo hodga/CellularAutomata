@@ -97,17 +97,17 @@ public class CellularAutomataEngine {
             System.out.println("expecting neighborhood size 3 for 1 dimentional CA");
             return false;
         }
-        if(dim.length == 2 && (neighborhoodSize != 5 || neighborhoodSize != 9)) {
+        if(dim.length == 2 && (neighborhoodSize != 5 && neighborhoodSize != 9)) {
             System.out.println("expecting neighborhood size 5 or 9 for 2 dimentional CA");
             return false;
         }
-        if(dim.length == 3 && (neighborhoodSize != 7 || neighborhoodSize != 27)) {
+        if(dim.length == 3 && (neighborhoodSize != 7 && neighborhoodSize != 27)) {
             System.out.println("expecting neighborhood size 7 or 27 for 3 dimentional CA");
             return false;
         }
         
-        int size = 1;
-        for(int i = 0; i < dim.length;i++) size *= dim[i];
+        int size = dim[0];
+        for(int i = 1; i < dim.length;i++) size *= dim[i];
         if(size != initialState.length) {
             System.out.println("the length of the intialState array and the dimentions do not match");
             return false;
