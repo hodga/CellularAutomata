@@ -85,7 +85,7 @@ public class ExperimentMain {
                 genomesFound.add(genome);
                 if(!unique)
                     System.out.println("================== not unique! ============================");
-                if(!GeneticAlgorithmTest.validateGenomeTrajectoryLength(genome, complexities[i])) {
+                if(!GeneticAlgorithmTest.validateGenomeTrajectoryLength(genome, complexities[i]) && statistics.size() != maxGenerations) {
                     System.out.println("Not a valid trajectory length for the genome! Something wrong with the algorithm?");
                 }
                 
