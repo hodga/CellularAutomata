@@ -21,8 +21,19 @@ public class GenomeData {
     private int[] genomeUsageStatistics;
     private float genomeUsageFactor;
 
+    private double GDDifference;
+
     public GenomeData(int[] genome) {
         this.genome = genome;
+    }
+
+    public int getCenterCellAtInd(int ind) {
+        int nb = 0;
+        for(int i = 0; i <= (5/2);i++) {
+            nb = ind % 3;
+            ind = ind/3;
+        }
+        return nb;
     }
 
     public double getAdjustedFitness() {
@@ -83,5 +94,13 @@ public class GenomeData {
 
     public void setRelativeLambda(double relativeLambda) {
         this.relativeLambda = relativeLambda;
+    }
+
+    public double getGDDifference() {
+        return GDDifference;
+    }
+
+    public void setGDDifference(double GDDifference) {
+        this.GDDifference = GDDifference;
     }
 }

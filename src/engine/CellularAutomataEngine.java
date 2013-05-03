@@ -38,10 +38,21 @@ public class CellularAutomataEngine {
 
     private static int[] indexHelper;
 
+    //constants
+    //indices for gddStats
+    public static final int GROWTH = 0;
+    public static final int DIFF = 1;
+    public static final int DEATH = 2;
+    public static final int NONE = 3;
+
     //State variables which should be unique between tests
 
     private int[] genome;
-    private int[] genomeUsageStatistics;
+    private int[] genomeUsageStatistics; //count for the usage of each gene in the genome
+    private int[] gddStats = new int[4]; //count for growth, differentiation, death and unchanged genomes
+
+    private int quiecentStateUsage = 0;
+    private int totalUsage = 0;
 
     private int[] state;
 
@@ -122,9 +133,26 @@ public class CellularAutomataEngine {
     public int[] getGenomeUsageStatistics() {
         return genomeUsageStatistics;
     }
+
+    public int[] getGDDStats() {
+        return gddStats;
+    }
     
     public int[] getGenome() {
         return genome;
+    }
+
+    public int getTotalGenomeUsage() {return totalUsage;}
+    public int getQuicentStateUsage(){return quiecentStateUsage;}
+
+    //update count for growth, differentiation, death and unchanged genomes
+    public void updateGDD(int centerCell, int result) {
+        if(centerCell == result) gddStats[NONE]++; //no change in cell
+        else if(centerCell == 0 && result != 0) gddStats[GROWTH]++; //cell was 0 but grows to a different value
+        else if(centerCell != 0) {
+            if(result != 0) gddStats[DIFF]++; //cell was not 0 and differentiats to a value not 0
+            else if(result == 0) gddStats[DEATH]++; //Cell was not 0 and dies to 0
+        }
     }
 
     private int getGeneIndex(int[] neighborhoodConfiguration) {
@@ -148,7 +176,13 @@ public class CellularAutomataEngine {
 
     private int getGeneKeepStatistics(int[] neighborhoodConfiguration) {
         int index = getGeneIndex(neighborhoodConfiguration);
+        totalUsage++;
+
         genomeUsageStatistics[index]++;
+        if(genome[index] == 0) quiecentStateUsage++;
+
+        updateGDD(neighborhoodConfiguration[neighborhoodSize/2], genome[index]);
+
         return genome[index];
     }
     
@@ -173,7 +207,7 @@ public class CellularAutomataEngine {
                 else if(x == dim[0]-1) right = 0;
             }
             
-            if(neighborhoodSize != 3) {
+            if(neighborhoodSize != 3) { //2D
                 over = -dim[0];
                 under = dim[0];
                 
@@ -188,7 +222,7 @@ public class CellularAutomataEngine {
                     else if(y == (dim[1]-1)) under = 0;
                 }
                 
-                if(neighborhoodSize == 27 || neighborhoodSize == 7) {
+                if(neighborhoodSize == 27 || neighborhoodSize == 7) { //3D
                     below = (dim[0]*dim[1]);
                     above = -below;
                     

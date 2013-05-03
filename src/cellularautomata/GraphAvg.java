@@ -20,13 +20,14 @@ public class GraphAvg {
     /**
      * @param args the command line arguments
      */
-    public static void run(String[] args) throws Exception{
+    public static void run(String absPath, int chkComplexity, int runs) throws Exception{
         
-      String absPath = "D:\\Development\\Projects\\Cellular_Automata\\InitialTestsForMaster\\Test_with_lambda\\";
-      int runs = 20;
+      //String absPath = "D:\\Master_Eksperimenter\\first_check_lambda_values_and_genome_usage\\lambda_to_discard\\";
+      //int runs = 20;
       //int[] complexities = {10, 1000, 5000, 10000, 15000, 20000, 25000, 100000000};
       //int[] complexities = {1000, 10000, 20000, 25000};
-      int[] complexities = {1000,5000, 10000};
+      //int[] complexities = {1000,5000, 10000, 15000, 20000, 25000};
+      int[] complexities = { chkComplexity };
       
       ArrayList<int[]> stats = new ArrayList<int[]>();
       ArrayList<String> names = new ArrayList<String>();

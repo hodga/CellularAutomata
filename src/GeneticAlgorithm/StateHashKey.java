@@ -5,9 +5,7 @@
 
 package GeneticAlgorithm;
 
-import engine.CellularAutomataEngine;
 import java.util.Arrays;
-import tests.CellularAutomataTest;
 
 /**
  *
